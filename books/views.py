@@ -2,33 +2,29 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 import datetime
 from . import models
+from .models import Book
+
 
 
 def book_detail(request, id):
-    if request.method == "GET":
+    if request.method == 'GET':
         book_id = get_object_or_404(models.Book, id=id)
         return render(
             request,
             template_name='book_detail.html',
             context={
-                'book_id' : book_id,
+                'book_id': book_id,
             }
         )
 
-
-
-
-
-
-
 def books_list(request):
     if request.method == "GET":
-            query = models.Book.objects.all()
+            books = Book.objects.filter(genre='comedy')
             return render(
                 request,
                 template_name='book.html',
                 context={
-                    'query' : query,
+                    'books' : books,
                 }
             )
 
@@ -47,3 +43,4 @@ def system_time(request):
     if request.method == "GET":
         now = datetime.datetime.now()
         return HttpResponse(f'текущее время {now}')
+
