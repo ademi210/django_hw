@@ -42,21 +42,7 @@ class AboutMeView(generic.View):
 
 class AboutAnimalView(generic.View):
     def get(self, request):
-        return HttpResponse("<h1> У меня есть домашнее животное. Кошка. Ее зовут Кэтти.")
-
-
-class SearchBookView(generic.ListView):
-    template_name = 'show.html'
-    context_object_name = 'query'
-
-    def get_queryset(self):
-        query = self.request.GET.get('q')
-        return Book.objects.filter(title__icontains=query) if query else Book.objects.none()
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['q'] = self.request.GET.get('q')
-        return context
+        return HttpResponse("муя")
 
 
 class ReviewCreateView(generic.View):
@@ -77,10 +63,12 @@ class SearchBookView(generic.ListView):
     context_object_name = 'books'
 
     def get_queryset(self):
-        query = self.request.GET.get('q')
-        return Book.objects.filter(title__icontains=query)
+        query = self.request.GET.get('q', '')
+        if query:
+            return Book.objects.filter(title__icontains=query)
+        return Book.objects.none()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['q'] = self.request.GET.get('q')
+        context['q'] = self.request.GET.get('q', '')
         return context

@@ -12,8 +12,10 @@ class CartView(generic.TemplateView):
     def get_context_data(self, **kwargs):
         return {"cart": Cart.objects.get_or_create(user=self.request.user)[0]}
 
+
 class UpdateCartView(generic.UpdateView):
     model = Cart
+
     def post(self, request, product_id, quantity):
         cart_item = get_object_or_404(CartItem, cart__user=request.user, product_id=product_id)
         if quantity > 0:
@@ -38,7 +40,6 @@ class CheckoutView(generic.TemplateView):
         if not cart.items.exists():
             messages.error(request, 'Корзина пуста!')
             return redirect('cart_view')
-
         Order.objects.create(
             cart=cart, user=request.user, address_line_1='Введите адрес',
             phone_number='Введите номер', total_price=cart.total_price()
