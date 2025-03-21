@@ -1,45 +1,86 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views import generic
 from django.http import HttpResponse
 from .models import Book, Review
 from .forms import ReviewForm
-from django.shortcuts import redirect
+
+class BookListView(generic.ListView):
+    model = Book
+    template_name = 'book/book.html'
+    context_object_name = 'books'
 
 
+class BookDetailView(generic.DetailView):
+    model = Book
+    template_name = 'book/book_detail.html'
+    context_object_name = 'book'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = ReviewForm()
+        return context
 
 
-def book_list_view(request):
-    if request.method == 'GET':
-        books = Book.objects.all()
-        return render(request, 'book/book.html', {'books': books})
-
-
-def book_detail_view(request, id):
-    if request.method == 'GET':
-        form = ReviewForm()
-        book = Book.objects.get(id=id)
-        return render(request, 'book/book_detail.html', {'book': book, 'form': form})
-    elif request.method == 'POST':
+class BookReviewCreateView(generic.View):
+    def post(self, request, pk):
         form = ReviewForm(request.POST)
+        book = get_object_or_404(Book, pk=pk)
         if form.is_valid():
             Review.objects.create(
                 text=form.cleaned_data['text'],
                 star=form.cleaned_data['star'],
-                book=Book.objects.get(id=id)
+                book=book
+            )
+            return redirect('book_detail', pk=book.pk)
+        return HttpResponse('Invalid data')
+
+
+class AboutMeView(generic.View):
+    def get(self, request):
+        return HttpResponse("Меня зовут Адэми")
+
+
+class AboutAnimalView(generic.View):
+    def get(self, request):
+        return HttpResponse("<h1> У меня есть домашнее животное. Кошка. Ее зовут Кэтти.")
+
+
+class SearchBookView(generic.ListView):
+    template_name = 'show.html'
+    context_object_name = 'query'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        return Book.objects.filter(title__icontains=query) if query else Book.objects.none()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['q'] = self.request.GET.get('q')
+        return context
+
+
+class ReviewCreateView(generic.View):
+    def post(self, request, id):
+        form = ReviewForm(request.POST)
+        book = get_object_or_404(Book, id=id)
+        if form.is_valid():
+            Review.objects.create(
+                text=form.cleaned_data['text'],
+                star=form.cleaned_data['star'],
+                book=book
             )
             return redirect('book_detail', id=id)
-        else:
-            return HttpResponse('Invalid data')
+        return render(request, 'book/book_detail.html', {'book': book, 'form': form})
 
+class SearchBookView(generic.ListView):
+    template_name = 'book/search_results.html'
+    context_object_name = 'books'
 
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        return Book.objects.filter(title__icontains=query)
 
-def about_me(request):
-    if request.method == "GET":
-        return HttpResponse("меня зовут адэми")
-
-
-def about_animal(request):
-    if request.method == "GET":
-        return HttpResponse("<h1> У меня есть домашнее животное. Кошка. ее зовут Кэтти. "
-                            "Увидеть ее можно по ссылке image/ </h1>")
-
-
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['q'] = self.request.GET.get('q')
+        return context

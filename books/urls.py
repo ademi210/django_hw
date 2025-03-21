@@ -1,11 +1,12 @@
 from django.urls import path
-from . import views
+from .views import BookListView, BookDetailView, ReviewCreateView ,SearchBookView, BookReviewCreateView
+
 
 urlpatterns = [
-    path('about_me/', views.about_me),
-    path('books_list/', views.book_list_view, name='book_list'),
-    path('books/<int:id>/', views.book_detail_view, name='book_detail'),
-    path('about_animal/', views.about_animal),
-    path('image')
-
+    path('', BookListView.as_view(), name='book_list'),  # Список книг
+    path('<int:pk>/', BookDetailView.as_view(), name='book_detail'),  # Детальная страница книги
+    path('<int:pk>/review/', ReviewCreateView.as_view(), name='add_review'),  # Добавление отзыва
+    path('search/', SearchBookView.as_view(), name='search_book'),
+    path('<int:pk>/reviews/', BookReviewCreateView.as_view(), name='book_review_create'),  # Создание отзыва на книгу
 ]
+

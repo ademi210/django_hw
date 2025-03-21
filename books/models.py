@@ -2,12 +2,16 @@ from django.db import models
 
 
 class Book(models.Model):
+    GENRE = (
+        ('Ужасы', 'Ужасы'),
+        ('Комедия', 'Комедия'),
+    )
     image = models.ImageField(upload_to='media/', blank=True, null=True)
     title = models.CharField(max_length=100)
     description = models.TextField()
     price = models.PositiveIntegerField(default=10)
     created_at = models.DateTimeField(auto_now_add=True)
-    genre = models.CharField(max_length=100)
+    genre = models.CharField(max_length=100, choices=GENRE)
     email = models.EmailField(null=True)
     author = models.CharField(max_length=100)
 
@@ -15,7 +19,7 @@ class Book(models.Model):
         return self.title
 
     class Meta:
-        verbose_name = 'Книга'
+        verbose_name = 'Книгу'
         verbose_name_plural = 'Книги'
 
 
