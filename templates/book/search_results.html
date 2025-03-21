@@ -1,0 +1,14 @@
+<!-- search_results.html -->
+<form method="GET" action="{% url 'search_book' %}">
+    <input type="text" name="q" placeholder="Поиск книг" value="{{ request.GET.q }}">
+    <button type="submit">Поиск</button>
+</form>
+
+<h2>Результаты поиска:</h2>
+<ul>
+    {% for book in books %}
+        <li>{{ book.title }}</li>
+    {% empty %}
+        <p>Книги не найдены.</p>
+    {% endfor %}
+</ul>
