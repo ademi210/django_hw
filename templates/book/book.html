@@ -1,0 +1,34 @@
+{% load static %}
+{% include 'components/header.html' %}
+
+
+<link rel="stylesheet" href="{% static 'css/book.css' %}">
+<link rel="stylesheet" href="{% static 'css/book_detail.css' %}">
+<!-- Контент с карточками -->
+<div class="container mt-4 content">
+    <div class="row justify-content-center">
+        {% for book in books %}
+        <!-- Пример карточки книги -->
+        <div class="col-md-4 mb-4">
+            <div class="card" style="width: 100%;">
+                {% if book.image %}
+                    <img src="{{ book.image.url }}" class="card-img-top" alt="Книга">
+                {% else %}
+                    <img src="https://comodosslstore.com/blog/wp-content/uploads/2024/01/website-page-found-error-robot-character-broken-chatbot-mascot-disabled-site-technical-work_502272-1888.jpg">
+        {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ book.title }}</h5>
+                    <p class="card-text">{{ book.created_at }}</p>
+                    <a href="/books/{{ book.id }}" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <!-- Добавьте дополнительные карточки книг здесь -->
+    </div>
+</div>
+
+{% include 'components/footer.html' %}
+
+
+

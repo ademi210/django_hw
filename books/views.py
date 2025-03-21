@@ -1,46 +1,45 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.http import HttpResponse
-import datetime
-from . import models
-from .models import Book
+from .models import Book, Review
+from .forms import ReviewForm
+from django.shortcuts import redirect
 
 
 
-def book_detail(request, id):
+
+def book_list_view(request):
     if request.method == 'GET':
-        book_id = get_object_or_404(models.Book, id=id)
-        return render(
-            request,
-            template_name='book_detail.html',
-            context={
-                'book_id': book_id,
-            }
-        )
+        books = Book.objects.all()
+        return render(request, 'book/book.html', {'books': books})
 
-def books_list(request):
-    if request.method == "GET":
-            books = Book.objects.filter(genre='comedy')
-            return render(
-                request,
-                template_name='book.html',
-                context={
-                    'books' : books,
-                }
+
+def book_detail_view(request, id):
+    if request.method == 'GET':
+        form = ReviewForm()
+        book = Book.objects.get(id=id)
+        return render(request, 'book/book_detail.html', {'book': book, 'form': form})
+    elif request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            Review.objects.create(
+                text=form.cleaned_data['text'],
+                star=form.cleaned_data['star'],
+                book=Book.objects.get(id=id)
             )
+            return redirect('book_detail', id=id)
+        else:
+            return HttpResponse('Invalid data')
+
+
 
 def about_me(request):
     if request.method == "GET":
-        return HttpResponse("меня зовут адэми, мне 20 лет")
+        return HttpResponse("kmkm")
 
 
-def favorite_animal(request):
+def about_animal(request):
     if request.method == "GET":
-        return HttpResponse("Моё любимое животное кошка.Я люблю кошек за их грациозность и красоту,и ещё за их ловкость и быстроту.Кошки очень любят спать и играть.Кошки с мягкой шерстью,с красивыми и блестящими глазами и мощными лапами."
-                            
-                            "<''>")
+        return HttpResponse("<h1> У меня есть домашнее животное. Кошка. ее зовут Кэтти. "
+                            "Увидеть ее можно по ссылке image/ </h1>")
 
-def system_time(request):
-    if request.method == "GET":
-        now = datetime.datetime.now()
-        return HttpResponse(f'текущее время {now}')
 

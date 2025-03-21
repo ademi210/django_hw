@@ -6,18 +6,18 @@
   </component>
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
-    <show-object-properties value="true" />
+    <show-object-properties value="false" />
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="1e74776a-d6fd-4414-a627-db059a0639e5">
-      <console name="Connection" type="STANDARD" schema="" session="Main" />
+      <console name="Connection" type="STANDARD" schema="main" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -30,16 +30,57 @@
     <connection id="1e74776a-d6fd-4414-a627-db059a0639e5" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="1e74776a-d6fd-4414-a627-db059a0639e5" dataset="main.auth_user_user_permissions" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="1e74776a-d6fd-4414-a627-db059a0639e5" dataset="main.tags_product" active-filter-id="dadea008-5437-46c2-b94c-59906b13d1f1">
+      <filter id="dadea008-5437-46c2-b94c-59906b13d1f1" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
+        <condition column="id" operator="=" value="" active="true" />
+      </filter>
+    </filter-actions>
     <filter-actions connection-id="1e74776a-d6fd-4414-a627-db059a0639e5" dataset="main.django_migrations" active-filter-id="4b76d02a-91d3-43ea-9b3e-6780ec712e56">
       <filter id="4b76d02a-91d3-43ea-9b3e-6780ec712e56" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
         <condition column="id" operator="=" value="" active="true" />
       </filter>
     </filter-actions>
+    <filter-actions connection-id="1e74776a-d6fd-4414-a627-db059a0639e5" dataset="main.tags_tags" active-filter-id="cf710626-e8de-4d75-93e1-6892f723780b">
+      <filter id="cf710626-e8de-4d75-93e1-6892f723780b" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
+        <condition column="id" operator="=" value="" active="true" />
+      </filter>
+    </filter-actions>
+    <filter-actions connection-id="1e74776a-d6fd-4414-a627-db059a0639e5" dataset="main.auth_group_permissions" active-filter-id="3bdcad29-a972-4c25-b0a1-c217e6bf55b6">
+      <filter id="3bdcad29-a972-4c25-b0a1-c217e6bf55b6" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
+        <condition column="id" operator="=" value="" active="true" />
+      </filter>
+    </filter-actions>
+    <filter-actions connection-id="1e74776a-d6fd-4414-a627-db059a0639e5" dataset="main.tags_product_tags" active-filter-id="9dff0948-6aa7-4793-bfd6-cf0c573dde21">
+      <filter id="9dff0948-6aa7-4793-bfd6-cf0c573dde21" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
+        <condition column="id" operator="=" value="" active="true" />
+      </filter>
+    </filter-actions>
+    <filter-actions connection-id="1e74776a-d6fd-4414-a627-db059a0639e5" dataset="main.django_content_type" active-filter-id="922ea822-53d4-48d1-a06f-f07e8e63fcfc">
+      <filter id="922ea822-53d4-48d1-a06f-f07e8e63fcfc" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
+        <condition column="id" operator="=" value="" active="true" />
+      </filter>
+    </filter-actions>
+    <filter-actions connection-id="1e74776a-d6fd-4414-a627-db059a0639e5" dataset="main.books_review" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="1e74776a-d6fd-4414-a627-db059a0639e5" dataset="main.auth_group" active-filter-id="16c1872d-4dc0-48ee-b529-c24b0627d3c9">
+      <filter id="16c1872d-4dc0-48ee-b529-c24b0627d3c9" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
+        <condition column="id" operator="=" value="" active="true" />
+      </filter>
+    </filter-actions>
+    <filter-actions connection-id="1e74776a-d6fd-4414-a627-db059a0639e5" dataset="main.books_book" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="1e74776a-d6fd-4414-a627-db059a0639e5" dataset="main.books_books" active-filter-id="423e2c0c-1825-403c-b5f6-dc97f8d7f81d">
       <filter id="423e2c0c-1825-403c-b5f6-dc97f8d7f81d" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
         <condition column="id" operator="=" value="" active="true" />
       </filter>
     </filter-actions>
+    <filter-actions connection-id="1e74776a-d6fd-4414-a627-db059a0639e5" dataset="main.auth_permission" active-filter-id="0c829c70-c0b4-410b-bffa-1ff302c05422">
+      <filter id="0c829c70-c0b4-410b-bffa-1ff302c05422" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
+        <condition column="id" operator="=" value="" active="true" />
+      </filter>
+    </filter-actions>
+  </component>
+  <component name="DBNavigator.Project.ExecutionManager">
+    <retain-sticky-names value="false" />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
@@ -529,5 +570,9 @@
         </visibility-settings>
       </environment>
     </general-settings>
+  </component>
+  <component name="DBNavigator.Project.StatementExecutionManager">
+    <execution-variables />
+    <execution-variable-types />
   </component>
 </project>
