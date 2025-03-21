@@ -34,7 +34,7 @@ def book_detail_view(request, id):
 
 def about_me(request):
     if request.method == "GET":
-        return HttpResponse("kmkm")
+        return HttpResponse("меня зовут адэми")
 
 
 def about_animal(request):
