@@ -1,37 +1,38 @@
 from django.db import models
 
 
+
 class Book(models.Model):
     GENRE = (
-        ('Ужасы', 'Ужасы'),
-        ('Комедия', 'Комедия'),
+        ('Детектив', 'Детектив'),
+        ('Мистика', 'Мистика'),
     )
-    image = models.ImageField(upload_to='media/', blank=True, null=True)
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=120)
     description = models.TextField()
-    price = models.PositiveIntegerField(default=10)
+    price = models.FloatField(default=1.0)
     created_at = models.DateTimeField(auto_now_add=True)
-    genre = models.CharField(max_length=100, choices=GENRE)
-    email = models.EmailField(null=True)
+    genre = models.CharField(max_length=10, choices=GENRE)
+    author_email = models.EmailField(default=0)
     author = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='book/')
+    video_url = models.URLField(null=True)
+
+
 
     def __str__(self):
         return self.title
 
-    class Meta:
-        verbose_name = 'Книгу'
-        verbose_name_plural = 'Книги'
 
-
-class Review(models.Model):
-    text = models.TextField()
-    star = models.PositiveIntegerField()
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='reviews')
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-
-    def __str__(self):
-        return self.text
-
-    class Meta:
-        verbose_name = 'Отзыв'
-        verbose_name_plural = 'Отзывы'
+class Comments(models.Model):
+    GRADE = (
+        ('👍', '👍'),
+        ('👍👍', '👍👍'),
+        ('👍👍👍', '👍👍👍'),
+        ('👍👍👍👍', '👍👍👍👍'),
+        ('👍👍👍👍👍', '👍👍👍👍👍'),
+    )
+    choice_book = models.ForeignKey(Book, on_delete=models.CASCADE,
+                                    related_name='comments')
+    created_at = models.DateTimeField(auto_now_add=True)
+    description = models.TextField()
+    grade = models.CharField(max_length=10, choices=GRADE, default='👍')
