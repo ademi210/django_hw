@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'tags',
     'basket',
     'parser',
+    'users',
 ]
 
 MIDDLEWARE = [
