@@ -1,0 +1,39 @@
+{% block content %}
+  <h1>Поиск книг</h1>
+  <form method="get" action="{% url 'book_search' %}">
+    <input type="text" name="q" placeholder="Поиск по названию" value="{{ request.GET.q|default:'' }}">
+    <button type="submit">Поиск</button>
+  </form>
+
+  <ul>
+    {% for book in books %}
+      <li>
+        <h2>{{ book.title }}</h2>
+        <p>Автор: {{ book.author }}</p>
+        <p>{{ book.description }}</p>
+      </li>
+    {% empty %}
+      <p>Ничего не найдено</p>
+    {% endfor %}
+  </ul>
+
+  {% if books.has_other_pages %}
+    <div class="pagination">
+      <span class="step-links">
+        {% if books.has_previous %}
+          <a href="?q={{ request.GET.q }}&page=1">&laquo; Первая</a>
+          <a href="?q={{ request.GET.q }}&page={{ books.previous_page_number }}">Предыдущая</a>
+        {% endif %}
+
+        <span class="current">
+          Страница {{ books.number }} из {{ books.paginator.num_pages }}.
+        </span>
+
+        {% if books.has_next %}
+          <a href="?q={{ request.GET.q }}&page={{ books.next_page_number }}">Следующая</a>
+          <a href="?q={{ request.GET.q }}&page={{ books.paginator.num_pages }}">Последняя &raquo;</a>
+        {% endif %}
+      </span>
+    </div>
+  {% endif %}
+{% endblock %}
