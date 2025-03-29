@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Recipe</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="shortcut icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9RaqWhNrT68sVwQFo4ZAs1VRsUZImppmaqg&s">
+    <link rel="stylesheet" href="{% static 'css/recipe_detail.css' %}">
+</head>
+<body>
+
+{% include 'components/header.html' %}
+<div class="container-fluid">
+    <a class="navbar-brand" href="#">
+        <img src="https://lh5.googleusercontent.com/yzWtzlXIlHfLjcFkr0S7UgmoX9HFoJ6VRszWZyEt-G85Gl5ID_XxoLX6Ji6E223S-EU2UUt2Y89uOwkm0tr8KkLQbM4Su17ln5HVBLaLHfxFIqm4DDpwmzPhfeAg1mja2Xdz7JkCvJqbpoEOT0CX8Cg"
+             alt="Logo" style="width: 40px; height: 40px;">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Переключатель навигации">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#" style="color: yellow;">Главная</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" style="color: yellow;">Хэш теги</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" style="color: yellow;">Регистрация</a>
+            </li>
+        </ul>
+        <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">
+            <button class="btn btn-outline-success" type="submit" style="color: yellow; border-color: yellow;">
+                Поиск
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Контент с информацией о рецепте -->
+<div class="container mt-4">
+    <div class="recipe-card">
+        <div class="card">
+            <!-- Здесь изображение рецепта, если оно есть -->
+            {% if recipe.image %}
+                <img src="{{ recipe.image.url }}" class="card-img-top" alt="Рецепт">
+            {% else %}
+                <img src="https://via.placeholder.com/500" class="card-img-top" alt="Рецепт">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ recipe.title }}</h5>
+                <p class="card-text">{{ recipe.description }}</p>
+
+                <h6>Ингредиенты:</h6>
+                <ul>
+                    {% for ingredient in recipe.ingredients.all %}
+                        <li>{{ ingredient.name }} - {{ ingredient.quantity }} г</li>
+                    {% empty %}
+                        <li>Ингредиенты не добавлены.</li>
+                    {% endfor %}
+                </ul>
+
+                <!-- Кнопка "Подробнее" -->
+                <a href="{% url 'recipes_detail' pk=recipe.pk %}" class="btn btn-primary">Подробнее</a>
+                <!-- Кнопка "Удалить" -->
+                <form action="{% url 'recipe_delete' pk=recipe.pk %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Удалить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Блок для комментариев -->
+    <div class="comment-section mt-4">
+        <h5>Комментарии</h5>
+        <div class="comment">
+            <p> (2024-09-24): Отличный рецепт! Рекомендую! <strong>Оценка:</strong> 5</p>
+        </div>
+    </div>
+</div>
+
+<!-- Футер -->
+{% include 'components/footer.html' %}
+
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+
+</body>
+</html>

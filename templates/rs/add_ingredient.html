@@ -1,0 +1,9 @@
+{% block content %}
+    <h2>Добавить ингредиент в рецепт "{{ recipe.title }}"</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Добавить ингредиент</button>
+    </form>
+    <a href="{% url 'recipe_detail' pk=recipe.pk %}">Отмена</a>
+{% endblock %}

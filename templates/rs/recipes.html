@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рецепты</title>
+    <link rel="stylesheet" href="{% static 'css/recipes.css' %}"> <!-- если используете стили -->
+</head>
+<body>
+    <header>
+        <h1>Добро пожаловать на сайт рецептов</h1>
+    </header>
+
+    <section class="recipes">
+        <h2>Популярные рецепты</h2>
+        <ul>
+            {% for recipe in recipes %}
+                <li class="recipe">
+                    <h3>{{ recipe.title }}</h3>
+                    <p>{{ recipe.description }}</p>
+
+                    <h4>Ингредиенты:</h4>
+                    <ul>
+                        {% for ingredient in recipe.ingredients.all %}
+                            <li>{{ ingredient.name }} - {{ ingredient.quantity }} г</li>
+                        {% empty %}
+                            <li>Ингредиенты не указаны.</li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% empty %}
+                <li>Нет доступных рецептов.</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <footer>
+        <p>© 2025 Сайт рецептов</p>
+    </footer>
+</body>
+</html>
